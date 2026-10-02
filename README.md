@@ -6,3 +6,4 @@
 
 ## Instrucciones del trabajo
 
+[Ver las instrucciones completas](INSTRUCCIONES.md)
