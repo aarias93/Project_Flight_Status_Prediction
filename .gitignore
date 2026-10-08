@@ -1,0 +1,14 @@
+*.csv
+*.parquet
+Combined_Flights_20??.csv
+Combined_Flights_2018_2022.parquet
+.ipynb_checkpoints/
+__pycache__/
+*.duckdb
+*.csv
+*.parquet
+Combined_Flights_20??.csv
+Combined_Flights_2018_2022.parquet
+.ipynb_checkpoints/
+__pycache__/
+*.duckdb
