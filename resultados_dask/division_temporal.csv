@@ -1,0 +1,5 @@
+conjunto,fecha_inicial,fecha_final,vuelos,retrasados,porcentaje_retrasados,duraciones_faltantes
+0_solo_EDA,2018-01-01,2018-12-31,5586617,1088341.0,19.48,62
+1_entrenamiento,2019-01-01,2020-12-31,12630194,1996410.0,15.81,7
+2_validacion,2021-01-01,2021-12-31,6185870,1068059.0,17.27,1
+3_prueba,2022-01-01,2022-07-31,3944916,853962.0,21.65,1
