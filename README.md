@@ -13,6 +13,8 @@
 
 [Ver las instrucciones completas](INSTRUCCIONES.md)
 
+[Consultar el plan de trabajo actualizado](PLAN_DE_TRABAJO.md)
+
 ---
 
 # Priorización de vuelos con riesgo de retraso
@@ -25,8 +27,9 @@ Maestría en Analítica Aplicada — Universidad de La Sabana.
 Priorizar, antes de la salida programada, los vuelos con mayor riesgo
 de llegar con al menos 15 minutos de retraso.
 
-El usuario propuesto es el equipo de operaciones de una aerolínea.
-Se evalúa una capacidad ilustrativa de seguimiento del 10 % de los vuelos.
+El usuario propuesto es el equipo de planificación de una aerolínea. La propuesta calcula un nivel de riesgo para todos los vuelos programados y genera alertas para que el equipo revise los casos de mayor riesgo. Planteamos calcularlo 24 horas antes de la salida programada como escenario académico; la fuente histórica no registra cuándo estuvo disponible cada variable, por lo que no podemos verificar esa anticipación.
+
+El 10 % se usa únicamente como escenario retrospectivo para comparar modelos y medir la concentración de retrasos. No representa un límite operativo para vigilar vuelos.
 
 La unidad de análisis es un vuelo individual.
 
@@ -40,7 +43,9 @@ https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022
 - Tamaño registrado en el notebook: 10,21 GB.
 - Registros originales: 29.193.782.
 - Columnas originales: 61.
-- Cobertura observada: enero de 2018 a julio de 2022.
+- Cobertura observada: enero de 2018 a julio de 2022, para vuelos de Estados Unidos.
+- El año 2020 se conserva para describir el contexto pandémico, pero se excluye del entrenamiento y la evaluación predictiva.
+- Uso propuesto: evaluar una posible aplicación en Colombia. No afirmamos que el modelo esté validado para la operación colombiana; requeriría datos locales, revisión de variables y evaluación y calibración con vuelos de Colombia.
 - Base preparada: 28.347.597 vuelos elegibles.
 - Exportación: 55 archivos Parquet mensuales.
 
@@ -51,6 +56,8 @@ ni se carga a AWS.
 
 - Clase 1: ArrDelay >= 15 minutos.
 - Clase 0: ArrDelay < 15 minutos.
+
+El umbral de 15 minutos se conserva como definición del resultado utilizada en los datos y reportes estadounidenses. No lo presentamos como umbral normativo colombiano; antes de una aplicación local habría que revisar la reglamentación aeronáutica colombiana vigente y las políticas de la aerolínea.
 
 La clasificación se contrasta con ArrDel15. Se excluyen vuelos cancelados,
 desviados y registros sin resultado conocido de la base supervisada.
@@ -88,9 +95,10 @@ Esta instalación debe comprobarse en el equipo de destino.
 El registro de versiones no demuestra, por sí solo, una reproducción
 completa desde cero.
 
-Abrir la carpeta del proyecto en VS Code y seleccionar el kernel
-del entorno correspondiente. Colocar el CSV original en la ubicación
-esperada por el notebook y revisar las rutas antes de ejecutar.
+Abrir esta carpeta raíz del repositorio en VS Code y seleccionar el kernel
+del entorno correspondiente. Colocar aquí el archivo
+`Combined_Flights_2018-2022.csv`. El notebook usa rutas relativas a la
+carpeta abierta; no necesita la ruta personal de otro computador.
 
 Seguir este orden:
 1. Diagnóstico del entorno y localización del CSV.
@@ -139,7 +147,7 @@ Variables:
 No se utilizan como predictores los retrasos observados, las horas reales
 de salida o llegada ni los tiempos reales de rodaje.
 
-Entrenamiento: muestra de 1.000.000 de vuelos de enero a septiembre de 2021.
+Entrenamiento del modelo final: muestra de 1.000.000 de vuelos de enero a septiembre de 2021. La versión logística usada como referencia se reentrenó con una muestra de 2019. El año 2020 se excluyó del modelado.
 Validación: octubre a diciembre de 2021.
 Evaluación adicional: enero a julio de 2022.
 
@@ -213,14 +221,18 @@ El tablero permite filtrar por aerolínea y revisar tasas, riesgo estimado
 y aeropuertos de origen. El período del tablero exportado está fijado
 a enero–julio de 2022.
 
-## 10. Limitaciones
+## 10. Limitaciones y alcance para Colombia
 
+- La base y la evaluación corresponden a vuelos de Estados Unidos. La propuesta para Colombia es una aplicación potencial, no una validación de desempeño en Colombia.
+- La anticipación de 24 horas es un supuesto académico. La base no registra la fecha y hora en que cada atributo estuvo disponible, así que no demuestra que todos los predictores pudieran conocerse con esa anticipación.
+- El umbral de 15 minutos refleja la definición del conjunto y del análisis estadounidense. No debe tratarse como una regla colombiana sin verificar la reglamentación aeronáutica vigente y el criterio operacional de la aerolínea.
+- El sistema propuesto calcularía el riesgo de todos los vuelos; las alertas destacarían los casos de mayor riesgo. El experimento retrospectivo del 10 % sirve para comparar modelos, no para restringir la vigilancia.
 - El modelo supervisado se evalúa sobre vuelos completados sin desvío.
-- La selección del 10 % se calculó sobre todo el período, no por día.
+- La selección comparativa del 10 % se calculó sobre todo el período, no por día.
 - Se requiere una evaluación en un período nuevo.
 - Las probabilidades requieren revisar su calibración.
 - No se incorporaron variables meteorológicas.
-- No se demostró transferencia directa a vuelos de Colombia.
+- No se validó la transferencia a vuelos de Colombia.
 - La carga a AWS no forma parte del flujo automático actual.
 
 ## 11. Soportes de entrega
