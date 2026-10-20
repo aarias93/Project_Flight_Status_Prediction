@@ -1,0 +1,1 @@
+Versiones registradas en una ejecución anterior. El sistema y las rutas locales pertenecían a otro equipo; consulta el README del repositorio para la configuración vigente.

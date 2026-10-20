@@ -1,30 +1,24 @@
-Plan de trabajo
+# Plan de trabajo actualizado
 
-1. Verificar el conjunto de datos
-  - Abrir la fuente de Kaggle y anotar los nombres y tamaños de sus archivos.
-  - Comprobar peso.
-  - Si el tamaño no está claro o no cumple, documenten la duda y consulten al profesor antes de basar todo el proyecto en esa fuente.
-Nota: No suban el conjunto de datos original a GitHub; el profesor indica que allí debe ir el código y que a AWS se suben los resultados del análisis.
+## Propósito
 
-2. Definir el análisis
-  - Objetivo provisional: analizar cómo varían los retrasos de vuelos por aerolínea, aeropuerto y horario.
-  - Unidad de análisis: un vuelo.
-  - Pregunta inicial: ¿qué grupos de vuelos presentan mayores retrasos?
-  - Posible variable objetivo: retraso de llegada. Si más adelante lo usan para predecir antes del vuelo, deberán excluir datos que solo se conocen después, para evitar hacer trampa accidentalmente con la respuesta.
+Nosotros analizamos vuelos históricos de Estados Unidos para estimar cuáles tendrían mayor riesgo de llegar con al menos 15 minutos de retraso. Proponemos que un equipo de planificación de una aerolínea consulte el riesgo de todos sus vuelos y reciba alertas sobre los de mayor riesgo. El horizonte de 24 horas antes de la salida es un supuesto académico: los datos históricos no muestran cuándo estuvo disponible cada variable.
 
-3. Exploren una parte de los datos
-Revisar una muestra y registrar:
-  - cantidad de filas y columnas examinadas;
-  - columnas principales y sus tipos;
-  - valores faltantes;
-  - promedio y mediana del retraso;
-  - porcentaje de vuelos retrasados o cancelados;
-  - uno o dos gráficos sencillos, por ejemplo retraso por aerolínea o por mes.
-Nota: Gardar el notebook en notebooks/ y los gráficos en reports/. Indicar claramente si los resultados provienen de una muestra, no del conjunto completo.
+La aplicación a Colombia es una propuesta. Los datos usados no son colombianos y el modelo aún no ha sido validado en Colombia.
 
-4. Organizar GitHub y el informe
-  - En README.md: objetivo provisional, integrantes, fuente y estado del avance.
-  - En INSTRUCCIONES.md: texto completo de la consigna del profesor.
-  - En el documento compartido: metodología CRISP-DM inicial, descripción de los datos y resultados preliminares.
+## Pasos de ajuste
 
-5. Armar la presentación y ensayar
+1. **Cerrar el alcance del proyecto.** Mantener como población analizada los vuelos de Estados Unidos y describir Colombia como escenario propuesto, pendiente de datos y validación local. Definir un vuelo programado como unidad de análisis.
+2. **Aclarar el resultado.** Mantener ArrDel15 (llegada con retraso de 15 minutos o más) como etiqueta histórica del conjunto. Explicar que el umbral proviene de los datos/reportes de EE. UU. y no se afirma que sea un umbral normativo colombiano.
+3. **Revisar la anticipación de 24 horas.** Documentarla como supuesto; verificar con el área operacional qué campos se conocerían realmente en ese momento. La tabla histórica no permite reconstruir su disponibilidad temporal.
+4. **Ajustar la propuesta operacional.** Calcular una puntuación para cada vuelo programado y usar alertas configurables para resaltar riesgos altos. Conservar la selección del 10 % solamente como escenario retrospectivo de comparación, no como límite para vigilar vuelos.
+5. **Delimitar el periodo pandémico.** Conservar 2020 únicamente en la descripción exploratoria, con una nota sobre su comportamiento pandémico. Excluirlo del entrenamiento, validación y comparación de modelos. Informar los periodos efectivamente usados en cada ejecución.
+6. **Verificar el contexto colombiano.** Consultar las versiones vigentes de los Reglamentos Aeronáuticos de Colombia (RAC), las obligaciones aplicables y los procedimientos de la aerolínea antes de proponer uso operacional. La Aeronáutica Civil publica la normativa en [su portal oficial](https://www.aerocivil.gov.co/normatividad/NormatividadAeronautica/Pages/RAC.aspx). No presentar el umbral estadounidense de 15 minutos como una regla colombiana.
+7. **Respaldar la viabilidad con mediciones.** Reportar cantidad de vuelos, tiempo de ejecución, memoria configurada y limitaciones del equipo. Aclarar que el crecimiento observado es lineal si los resultados muestran una tendencia lineal; no afirmar escalabilidad exponencial sin evidencia.
+8. **Revisar los métodos por separado.** Preparar las entradas según los supuestos matemáticos de cada técnica de correlación o modelo, según la comparación que el grupo defina. Documentar escalamiento, variables, periodo y métricas para que la comparación sea justa. Evitar una conclusión de mejor modelo sin resultados comparables.
+9. **Actualizar los entregables.** Alinear informe, notebook, presentación, tablero Grafana y README con el mismo alcance, periodos, definiciones y limitaciones. No reportar el tamaño del Parquet consolidado hasta medir y verificar ese archivo.
+10. **Sincronizar el repositorio.** Mantener el CSV y Parquet originales fuera de GitHub; publicar código, notebooks, documentación y resultados analíticos permitidos. Revisar cambios antes de confirmar la sincronización.
+
+## Uso de las métricas retrospectivas
+
+Las cifras del escenario del 10 % describen cómo se ordenaron históricamente los vuelos evaluados. No prueban que se hayan evitado retrasos, que exista una cuota real de revisión ni que se produzca ahorro. Una operación que puntúe todos los vuelos debe definir con sus responsables qué umbral de alerta es útil y cómo se verifican las alertas.

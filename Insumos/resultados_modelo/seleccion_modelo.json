@@ -1,0 +1,9 @@
+{
+  "modelo": "regresion_logistica_2019.joblib",
+  "entrenamiento": "400000 vuelos de 2019; semilla 42",
+  "validacion": "2021 completo",
+  "criterio_seleccion": "Mayor recall_top10 en validacion",
+  "prueba": "Enero-julio de 2022",
+  "fraccion_priorizada": 0.1,
+  "referencia": "Tasas historicas de la muestra 2019-2020"
+}
