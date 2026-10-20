@@ -241,3 +241,10 @@ El repositorio debe acompañarse del EDA del grupo, el documento
 colaborativo con las fases CRISP-DM y las evidencias de ejecución.
 
 La presentación ejecutiva resume el proyecto y sus resultados.
+## 12. Documentos, notebooks y versiones de referencia
+
+- `Procesos_revisado.docx` contiene el informe actualizado; es la versión que debe usarse para revisión.
+- `Procesos .docx`, `Plan de trabajo.docx`, `readme.docx` e `Instrucciones.docx` se conservan como documentos recibidos o versiones previas. Para el plan vigente, usar `PLAN_DE_TRABAJO.md`.
+- `Preparacion_modelo_vuelos.ipynb` es el notebook principal actualizado. `0. Proyecto_vuelos_integrado.ipynb` y los notebooks cuyo nombre comienza por `EDA` se conservan como evidencias y avances recibidos.
+- `Insumos/` conserva versiones anteriores, modelos y resultados de referencia. No asumir que sus métricas o periodos son los vigentes; contrastarlos con este README y `Procesos_revisado.docx`.
+- Se incluyen los modelos serializados necesarios para el flujo Prefect. Los datos grandes originales se descargan desde Kaggle y no se almacenan en este repositorio.
