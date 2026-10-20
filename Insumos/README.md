@@ -1,3 +1,7 @@
+# Nota sobre resultados históricos
+
+Los archivos de esta carpeta son insumos o referencias históricas. Cualquier salida anterior que incluya vuelos de 2020 queda obsoleta y no debe citarse. La exclusión de 2020 aplica a todo el análisis. Consulte [NOTA_EXCLUSION_2020.md](NOTA_EXCLUSION_2020.md).
+
 # Material de referencia anterior
 
 Esta carpeta conserva notebooks, modelos y resultados recibidos durante el desarrollo. Son copias de referencia, no la versión canónica del proyecto. Para las decisiones metodológicas vigentes, el alcance revisado y las instrucciones de ejecución, consulta el [README principal](../README.md), el [plan actualizado](../PLAN_DE_TRABAJO.md) y el [informe revisado](../Procesos_revisado.docx).

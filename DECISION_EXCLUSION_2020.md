@@ -1,0 +1,5 @@
+## Decisión metodológica sobre 2020
+
+La fuente original contiene vuelos de 2020. Por la alteración excepcional de las operaciones durante la pandemia de COVID-19 y la falta de comparabilidad con años regulares, excluimos ese año de todos los análisis descriptivos comparativos, indicadores de Dask, preparación de datos para modelos, entrenamiento, validación, evaluación y visualizaciones. No presentamos métricas ni conclusiones sobre 2020. Conservamos intacto el archivo fuente y aplicamos el filtro `Year <> 2020` antes de producir resultados. El período analítico queda limitado a 2018, 2019, 2021 y enero–julio de 2022.
+
+Los notebooks, gráficos, informes y mediciones calculados antes de aplicar este filtro quedan obsoletos. No se deben citar como resultados finales. Hay que regenerar las salidas sin 2020 antes de presentar cifras de EDA, Dask o tamaño de la base preparada.

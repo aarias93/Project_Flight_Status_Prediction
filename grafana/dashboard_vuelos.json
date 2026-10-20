@@ -823,6 +823,7 @@
           "items": []
         }
       }
-    }
+    },
+    "description": "Alcance analítico: vuelos de 2018, 2019, 2021 y enero–julio de 2022. El año 2020 se excluye de todos los análisis y visualizaciones; no se presentan resultados de ese año. Regenerar los datos fuente del tablero después de aplicar Year <> 2020."
   }
 }

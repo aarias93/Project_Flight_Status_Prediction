@@ -5,5 +5,6 @@
   "criterio_seleccion": "Mayor recall_top10 en validacion",
   "prueba": "Enero-julio de 2022",
   "fraccion_priorizada": 0.1,
-  "referencia": "Tasas históricas calculadas sobre la muestra de 2019, sin usar 2020"
+  "referencia": "Tasas históricas calculadas sobre la muestra de 2019, sin usar 2020",
+  "periodo_excluido": "2020, excluido de todo análisis"
 }

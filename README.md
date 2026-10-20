@@ -44,12 +44,11 @@ https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022
 - Registros originales: 29.193.782.
 - Columnas originales: 61.
 - Cobertura observada: enero de 2018 a julio de 2022, para vuelos de Estados Unidos.
-- El año 2020 se conserva para describir el contexto pandémico, pero se excluye del entrenamiento y la evaluación predictiva.
+- **Exclusión de 2020:** el año se excluye de todos los análisis y entregables con resultados; no presentamos métricas ni conclusiones de ese año. La decisión y el tratamiento de salidas previas están documentados en [DECISION_EXCLUSION_2020.md](DECISION_EXCLUSION_2020.md).
 - Uso propuesto: evaluar una posible aplicación en Colombia. No afirmamos que el modelo esté validado para la operación colombiana; requeriría datos locales, revisión de variables y evaluación y calibración con vuelos de Colombia.
-- Base preparada: 28.347.597 vuelos elegibles.
-- Exportación: 55 archivos Parquet mensuales.
-- Parquet combinado: aproximadamente 0,8 GB, según el resultado guardado en el EDA previo. Frente al CSV de 10,21 GB, equivale a una reducción aproximada del 92 %. La cifra está redondeada y no se revalidó en esta copia porque el Parquet combinado no está disponible aquí.
-- Los 55 Parquet mensuales son archivos preparados aparte; su peso total no está medido en este registro.
+- Periodo analítico: 2018, 2019, 2021 y enero–julio de 2022. La base preparada y la cantidad de archivos deben recalcularse después de excluir 2020.
+- El EDA previo registró un Parquet combinado de ≈0,8 GB para la fuente completa, que incluye 2020. Esa cifra no representa la base analítica final; el peso y la reducción se recalcularán con 2020 excluido.
+- El peso agregado de los Parquet mensuales también debe medirse después del filtro.
 
 El CSV original debe descargarse por separado. No se incluye en GitHub
 ni se carga a AWS.
@@ -118,19 +117,7 @@ Revisar cada sección antes de ejecutar todo nuevamente.
 
 ## 6. Evaluación con Dask
 
-Se compara la misma agregación sobre la base preparada:
-
-| Configuración | Workers | Memoria por worker | Tiempo mediano |
-| --- | --- | --- | --- |
-| A | 1 | 1 GiB | 4,190 segundos |
-| B | 2 | 512 MiB | 2,712 segundos |
-
-Se realizaron tres ejecuciones por configuración y se verificaron
-los mismos 102.792 grupos en las seis ejecuciones.
-
-La reducción del tiempo mediano fue aproximadamente 35,3 %.
-Los resultados dependen de las condiciones locales y de la caché.
-La memoria configurada no equivale a una medición del consumo máximo.
+Las mediciones anteriores (4,190 y 2,712 segundos; 102.792 grupos) se calcularon con una base que incluía 2020. Quedan obsoletas. Se deben volver a ejecutar ambas configuraciones de workers y memoria después de excluir 2020, y actualizar esta sección con los nuevos tiempos, grupos y fecha de ejecución. Hasta entonces no se presenta una comparación de rendimiento.
 
 ## 7. Modelo final
 
@@ -149,7 +136,7 @@ Variables:
 No se utilizan como predictores los retrasos observados, las horas reales
 de salida o llegada ni los tiempos reales de rodaje.
 
-Entrenamiento del modelo final: muestra de 1.000.000 de vuelos de enero a septiembre de 2021. La versión logística usada como referencia se reentrenó con una muestra de 2019. El año 2020 se excluyó del modelado.
+Entrenamiento del modelo final: muestra de 1.000.000 de vuelos de enero a septiembre de 2021. La versión logística usada como referencia se reentrenó con una muestra de 2019. El año 2020 se excluye de todo el proyecto, incluidos los análisis exploratorios; los modelos usan periodos de 2019, 2021 y 2022.
 Validación: octubre a diciembre de 2021.
 Evaluación adicional: enero a julio de 2022.
 

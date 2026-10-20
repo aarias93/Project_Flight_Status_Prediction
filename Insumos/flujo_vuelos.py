@@ -5,6 +5,7 @@ import tempfile
 import joblib
 import numpy as np
 import pandas as pd
+import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 from prefect import flow, task
@@ -35,8 +36,14 @@ def validar_entrada(archivo: str):
 
     if faltantes:
         raise ValueError(f"Faltan columnas: {sorted(faltantes)}")
+    if "Year" not in disponibles:
+        raise ValueError("Falta la columna Year para verificar la exclusión de 2020.")
     if parquet.metadata.num_rows == 0:
         raise ValueError("El archivo no contiene vuelos.")
+
+    for bloque in parquet.iter_batches(columns=["Year"], batch_size=250_000):
+        if pc.any(pc.equal(bloque.column(0), 2020)).as_py():
+            raise ValueError("La entrada contiene vuelos de 2020, excluido de todo el proyecto.")
 
     print(f"Entrada: {ruta.name}")
     print(f"Vuelos: {parquet.metadata.num_rows:,}")
