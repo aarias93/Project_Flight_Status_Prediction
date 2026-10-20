@@ -48,6 +48,8 @@ https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022
 - Uso propuesto: evaluar una posible aplicación en Colombia. No afirmamos que el modelo esté validado para la operación colombiana; requeriría datos locales, revisión de variables y evaluación y calibración con vuelos de Colombia.
 - Base preparada: 28.347.597 vuelos elegibles.
 - Exportación: 55 archivos Parquet mensuales.
+- Parquet combinado: aproximadamente 0,8 GB, según el resultado guardado en el EDA previo. Frente al CSV de 10,21 GB, equivale a una reducción aproximada del 92 %. La cifra está redondeada y no se revalidó en esta copia porque el Parquet combinado no está disponible aquí.
+- Los 55 Parquet mensuales son archivos preparados aparte; su peso total no está medido en este registro.
 
 El CSV original debe descargarse por separado. No se incluye en GitHub
 ni se carga a AWS.
