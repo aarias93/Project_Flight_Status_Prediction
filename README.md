@@ -1,239 +1,57 @@
-# Project_Flight_Status_Prediction
-261009 - Espacio de trabajo para el proyecto grupal de Big Data 
-**Elaborado por:**
-
-* Angela Liseth Arias Robles
-* Andres Jose Triana Olivera
-* Luis Felipe Cangrejo Motta
-
-## Fuente de datos
-[Flight Delay Dataset (2018–2022) en Kaggle](https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022)
-
-## Instrucciones del trabajo
-
-[Ver las instrucciones completas](INSTRUCCIONES.md)
-
-[Consultar el plan de trabajo actualizado](PLAN_DE_TRABAJO.md)
-
----
-
 # Priorización de vuelos con riesgo de retraso
 
-Proyecto grupal de Herramientas de Big Data.
-Maestría en Analítica Aplicada — Universidad de La Sabana.
+Proyecto grupal de Herramientas de Big Data, Maestría en Analítica Aplicada, Universidad de La Sabana.
+Equipo: Angela Liseth Arias Robles, Andres Jose Triana Olivera y Luis Felipe Cangrejo Motta.
 
-## 1. Objetivo de negocio
+## Objetivo y alcance
+Analizamos vuelos históricos de Estados Unidos para describir retrasos y evaluar cómo ordenar todos los vuelos programados por riesgo de llegar con 15 minutos o más de retraso. El equipo de planificación de una aerolínea es el usuario propuesto. El cálculo a 24 horas de la salida es un escenario académico: la fuente no documenta cuándo estuvo disponible cada variable.
 
-Priorizar, antes de la salida programada, los vuelos con mayor riesgo
-de llegar con al menos 15 minutos de retraso.
+Colombia es una posible aplicación futura, no una validación local. Antes de usar el modelo allí se requieren datos colombianos, revisión de RAC y procedimientos operativos, comprobación del horizonte, calibración y evaluación prospectiva.
 
-El usuario propuesto es el equipo de planificación de una aerolínea. La propuesta calcula un nivel de riesgo para todos los vuelos programados y genera alertas para que el equipo revise los casos de mayor riesgo. Planteamos calcularlo 24 horas antes de la salida programada como escenario académico; la fuente histórica no registra cuándo estuvo disponible cada variable, por lo que no podemos verificar esa anticipación.
+## Datos y exclusión de 2020
+Fuente: [Flight Delay Dataset 2018–2022 en Kaggle](https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022).
 
-El 10 % se usa únicamente como escenario retrospectivo para comparar modelos y medir la concentración de retrasos. No representa un límite operativo para vigilar vuelos.
+El CSV original contiene 29.193.782 filas, 61 columnas y pesa 10.214.365.394 bytes (10,214 GB decimales). Excluimos 2020 de todos los análisis, modelos, evaluaciones y visualizaciones por la falta de comparabilidad del periodo pandémico. No presentamos métricas de ese año y conservamos el CSV original intacto. Periodo analítico: 2018, 2019, 2021 y enero–julio de 2022.
 
-La unidad de análisis es un vuelo individual.
+La base Parquet analítica, con las 61 columnas y sin 2020, contiene 24.171.385 filas y pesa 678.550.973 bytes (0,679 GB decimales). La reducción respecto del CSV original es 93,36 % (15,05 veces menor); combina el filtro de 2020 y la conversión a Parquet. Los 43 Parquet mensuales de modelado ocupan 89.234.974 bytes (0,089 GB). La etiqueta supervisada válida contiene 23.634.669 vuelos, con 4.537.818 retrasos (19,20 %).
 
-## 2. Fuente y cobertura
+## Resultados reproducidos
+- Dask: 1 worker con 1 GiB/worker, mediana 21,656 s; 2 workers con 512 MiB/worker, mediana 10,568 s. Tres ejecuciones por configuración; mismos 23.634.669 vuelos y 81.136 grupos. Es una comparación de una tarea y un equipo, no una afirmación de escalamiento universal.
+- Modelos: la comparación justa entre Logística 400k y Boosting 400k usa la misma muestra y periodos, con preprocesamiento adecuado para cada algoritmo. Boosting 1M se reporta como candidato con más datos de entrenamiento.
+- Evaluación enero–julio 2022: Boosting 1M alcanzó ROC AUC 0,6455 y precisión de 41,52 % en el 10 % de mayor puntuación. Es retrospectiva, no independiente, y no demuestra retrasos evitados ni ahorro. Se deben calibrar las probabilidades.
+- Prefect: ejecución mensual enero–julio de 2022, 3.944.916 vuelos y 1.726.512 filas agregadas por fecha, aerolínea, origen y hora. El flujo comienza con Parquet preparado, no automatiza el proceso entero desde CSV.
 
-Dataset: Flight Delay Dataset 2018–2022, publicado por robikscube.
+## Versiones de documentos
 
-https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022
+Usa `INFORME_FINAL_Procesos_CRISP_DM.docx` y `PRESENTACION_FINAL_Priorizacion_Riesgo_Vuelos.pptx` para la entrega y exposición. `PLAN_DE_TRABAJO_FINAL.md` y `README.md` son las guías vigentes. Las versiones anteriores se conservan identificadas en `versiones_anteriores/`; no uses sus cifras para la entrega final.
 
-- Archivo original: Combined_Flights_2018-2022.csv.
-- Tamaño registrado en el notebook: 10,21 GB.
-- Registros originales: 29.193.782.
-- Columnas originales: 61.
-- Cobertura observada: enero de 2018 a julio de 2022, para vuelos de Estados Unidos.
-- **Exclusión de 2020:** el año se excluye de todos los análisis y entregables con resultados; no presentamos métricas ni conclusiones de ese año. La decisión y el tratamiento de salidas previas están documentados en [DECISION_EXCLUSION_2020.md](DECISION_EXCLUSION_2020.md).
-- Uso propuesto: evaluar una posible aplicación en Colombia. No afirmamos que el modelo esté validado para la operación colombiana; requeriría datos locales, revisión de variables y evaluación y calibración con vuelos de Colombia.
-- Periodo analítico: 2018, 2019, 2021 y enero–julio de 2022. La base preparada y la cantidad de archivos deben recalcularse después de excluir 2020.
-- El EDA previo registró un Parquet combinado de ≈0,8 GB para la fuente completa, que incluye 2020. Esa cifra no representa la base analítica final; el peso y la reducción se recalcularán con 2020 excluido.
-- El peso agregado de los Parquet mensuales también debe medirse después del filtro.
-
-El CSV original debe descargarse por separado. No se incluye en GitHub
-ni se carga a AWS.
-
-## 3. Variable objetivo
-
-- Clase 1: ArrDelay >= 15 minutos.
-- Clase 0: ArrDelay < 15 minutos.
-
-El umbral de 15 minutos se conserva como definición del resultado utilizada en los datos y reportes estadounidenses. No lo presentamos como umbral normativo colombiano; antes de una aplicación local habría que revisar la reglamentación aeronáutica colombiana vigente y las políticas de la aerolínea.
-
-La clasificación se contrasta con ArrDel15. Se excluyen vuelos cancelados,
-desviados y registros sin resultado conocido de la base supervisada.
-Los resultados desconocidos no se convierten en clase 0.
-
-## 4. Archivos principales
-
-| Archivo o carpeta | Función |
+## Archivos principales
+| Archivo o carpeta | Uso |
 | --- | --- |
-| Preparacion_modelo_vuelos.ipynb | Preparación, controles, Dask, modelos y carga analítica |
-| flujo_vuelos.py | Predicción y agregación recurrente con Prefect |
-| programar_vuelos.py | Revisión periódica de entradas nuevas o modificadas |
-| Requirements.txt | Versiones de las dependencias principales |
-| entorno_ejecucion.txt | Información del entorno utilizado |
-| datos_modelo/ | Parquet mensuales preparados |
-| modelos_v2/boosting_v2_1m.joblib | Pipeline final entrenado |
-| entradas_prefect/ | Parquet preparados para procesamiento recurrente |
-| salidas_prefect/ | Resúmenes analíticos exportados |
-| control_prefect.json | Registro de entradas procesadas |
-| grafana/dashboard_vuelos.json | Exportación del tablero de Grafana |
+| INFORME_FINAL_Procesos_CRISP_DM.docx | Informe de procesos y resultados recalculados |
+| PRESENTACION_FINAL_Priorizacion_Riesgo_Vuelos.pptx | Diapositivas finales para la exposición |
+| PLAN_DE_TRABAJO_FINAL.md | Estado y tareas pendientes |
+| DECISION_EXCLUSION_2020.md | Decisión metodológica sobre 2020 |
+| recalcular_base_sin_2020.py | Produce Parquet analítico y particiones de modelado |
+| recalcular_resultados_eda.py | Recalcula EDA descriptivo y tablas |
+| ejecutar_benchmark_dask.py | Compara configuraciones Dask |
+| evaluar_modelos_v2.py | Reevalúa modelos sin 2020 |
+| flujo_vuelos.py | Predicción y agregación con Prefect |
+| consolidar_resultados_prefect.py | Consolida las salidas mensuales |
+| resultados_eda/ | Estadísticos y resúmenes; los archivos grandes quedan locales |
+| resultados_dask/ | Tiempos y resultados de Dask |
+| resultados_modelo_v2/ | Métricas recalculadas por periodo y modelo |
+| entrega_aws/ | Resultado agregado preparado para AWS |
+| grafana/DASHBOARD_GRAFANA_FINAL_RIESGO_VUELOS.json | Definición local del tablero |
+| aws/AWS_TABLA_ANALITICA_FINAL.sql | Esquema agregado para PostgreSQL/RDS |
+| aws/AWS_CARGA_RESUMEN_FINAL.py | Cargador idempotente; requiere credenciales locales seguras |
 
-El nombre o la ubicación actual del JSON de Grafana puede diferir.
-Las carpetas de datos, modelos y salidas se generan localmente.
+El CSV fuente, los Parquet grandes y los temporales quedan fuera de GitHub. Los pipelines pequeños requeridos por el flujo sí están incluidos; los archivos de datos se generan o descargan localmente.
 
-## 5. Entorno y ejecución del notebook
+## AWS y Grafana
+El resultado agregado identificado para AWS es `entrega_aws/RESUMEN_ANALITICO_AWS_FINAL_2022_01-07.csv` (y su copia Parquet); estos archivos de datos están excluidos de GitHub. El esquema y cargador finales están en `aws/`. No se cargó a Amazon RDS ni se verificó la conexión en esta ejecución. El tablero final para importar está en `grafana/DASHBOARD_GRAFANA_FINAL_RIESGO_VUELOS.json`; no se verificó ni publicó en una instancia Grafana. La publicación en ambos servicios queda pendiente de acceso y evidencia de despliegue.
 
-El entorno utilizado quedó registrado en entorno_ejecucion.txt.
-Las versiones principales se encuentran en Requirements.txt.
+## Ejecución
+Consulte Requirements.txt, abra esta carpeta en VS Code y use rutas relativas. Para los resultados recalculados, ejecute recalcular_base_sin_2020.py, recalcular_resultados_eda.py, ejecutar_benchmark_dask.py, evaluar_modelos_v2.py y consolidar_resultados_prefect.py en ese orden, con el CSV original y modelos requeridos. Para el flujo, revise configuración en flujo_vuelos.py. No ejecute cargas AWS sin configurar credenciales fuera del repositorio y verificar que se suban únicamente agregados.
 
-Para preparar otro entorno, instalar sus dependencias desde la terminal:
-
-    python -m pip install -r Requirements.txt
-
-Esta instalación debe comprobarse en el equipo de destino.
-El registro de versiones no demuestra, por sí solo, una reproducción
-completa desde cero.
-
-Abrir esta carpeta raíz del repositorio en VS Code y seleccionar el kernel
-del entorno correspondiente. Colocar aquí el archivo
-`Combined_Flights_2018-2022.csv`. El notebook usa rutas relativas a la
-carpeta abierta; no necesita la ruta personal de otro computador.
-
-Seguir este orden:
-1. Diagnóstico del entorno y localización del CSV.
-2. Conversión por bloques a Parquet.
-3. Validación de cobertura, calidad y variable objetivo.
-4. Construcción de características y exportación mensual.
-5. Comparación de configuraciones de Dask.
-6. Entrenamiento y evaluación de los modelos.
-7. Ejecución del flujo Prefect.
-8. Consolidación de resultados y carga separada a AWS.
-9. Conexión e importación del tablero de Grafana.
-
-El notebook contiene operaciones que generan archivos y realizan cargas.
-Revisar cada sección antes de ejecutar todo nuevamente.
-
-## 6. Evaluación con Dask
-
-Las mediciones anteriores (4,190 y 2,712 segundos; 102.792 grupos) se calcularon con una base que incluía 2020. Quedan obsoletas. Se deben volver a ejecutar ambas configuraciones de workers y memoria después de excluir 2020, y actualizar esta sección con los nuevos tiempos, grupos y fecha de ejecución. Hasta entonces no se presenta una comparación de rendimiento.
-
-## 7. Modelo final
-
-Modelo: HistGradientBoostingClassifier.
-
-Variables:
-- Operating_Airline.
-- Origin.
-- Dest.
-- DayOfWeek.
-- hora_salida, derivada de CRSDepTime.
-- Distance.
-- duracion_programada_min.
-- duracion_programada_faltante.
-
-No se utilizan como predictores los retrasos observados, las horas reales
-de salida o llegada ni los tiempos reales de rodaje.
-
-Entrenamiento del modelo final: muestra de 1.000.000 de vuelos de enero a septiembre de 2021. La versión logística usada como referencia se reentrenó con una muestra de 2019. El año 2020 se excluye de todo el proyecto, incluidos los análisis exploratorios; los modelos usan periodos de 2019, 2021 y 2022.
-Validación: octubre a diciembre de 2021.
-Evaluación adicional: enero a julio de 2022.
-
-2022 ya había sido consultado durante el desarrollo; por tanto,
-no constituye una prueba final completamente independiente.
-
-En 2022, el modelo final identificó 163.780 retrasos entre los 394.492
-vuelos priorizados: precisión en el grupo seleccionado de 41,52 %.
-La primera versión identificó 131.777: diferencia de 32.003 retrasos.
-
-Esta comparación no demuestra reducción causal de retrasos ni ahorro.
-Las versiones también difieren en sus condiciones de entrenamiento.
-
-## 8. Prefect
-
-El flujo recibe un Parquet preparado con las características que espera
-el modelo. No recibe directamente el CSV original.
-
-Desde una terminal situada en la carpeta del proyecto:
-
-    python flujo_vuelos.py --archivo datos_modelo/vuelos_2022_01.parquet
-
-Para la revisión recurrente, iniciar el servidor local de Prefect:
-
-    prefect server start
-
-Mantener esa terminal abierta. En otra terminal, con el mismo entorno
-y situada en la carpeta del proyecto, ejecutar:
-
-    python programar_vuelos.py
-
-El programador utiliza http://127.0.0.1:4200/api y revisa
-entradas_prefect/ cada 60 segundos.
-
-Procesa archivos nuevos o modificados y vuelve a procesarlos si cambia
-el modelo o el código analítico. Las entradas sin cambios se omiten
-cuando su salida sigue disponible.
-
-El flujo predice por bloques, agrega por fecha, aerolínea y origen,
-y exporta un CSV a salidas_prefect/.
-
-Puede generar puntuaciones sin ArrDel15. En ese caso, no presenta
-resultados desconocidos como cero retrasos.
-
-El servidor y el proceso de programación deben permanecer activos.
-La automatización implementada llega hasta la exportación del CSV.
-
-## 9. AWS y Grafana
-
-La consolidación y carga a Amazon RDS PostgreSQL se ejecutan por separado
-en el notebook. Solo se almacenan resultados analíticos agregados.
-
-La carga histórica documentada contiene:
-- 358.665 filas agregadas.
-- 3.944.916 vuelos representados.
-- 853.962 retrasos observados.
-- Período: enero a julio de 2022.
-
-Las comprobaciones de esa carga están fijadas al período histórico.
-Para incorporar otros períodos se deben adaptar y validar.
-
-Grafana utiliza una conexión PostgreSQL con un usuario de lectura.
-Las credenciales se configuran en el entorno de ejecución y no se
-incluyen en el repositorio.
-
-Importar el JSON del tablero y asignar la fuente de datos correspondiente.
-Configurar la conexión TLS y el certificado de confianza utilizados
-para RDS. El certificado debe ser accesible desde el contenedor de Grafana.
-
-El tablero permite filtrar por aerolínea y revisar tasas, riesgo estimado
-y aeropuertos de origen. El período del tablero exportado está fijado
-a enero–julio de 2022.
-
-## 10. Limitaciones y alcance para Colombia
-
-- La base y la evaluación corresponden a vuelos de Estados Unidos. La propuesta para Colombia es una aplicación potencial, no una validación de desempeño en Colombia.
-- La anticipación de 24 horas es un supuesto académico. La base no registra la fecha y hora en que cada atributo estuvo disponible, así que no demuestra que todos los predictores pudieran conocerse con esa anticipación.
-- El umbral de 15 minutos refleja la definición del conjunto y del análisis estadounidense. No debe tratarse como una regla colombiana sin verificar la reglamentación aeronáutica vigente y el criterio operacional de la aerolínea.
-- El sistema propuesto calcularía el riesgo de todos los vuelos; las alertas destacarían los casos de mayor riesgo. El experimento retrospectivo del 10 % sirve para comparar modelos, no para restringir la vigilancia.
-- El modelo supervisado se evalúa sobre vuelos completados sin desvío.
-- La selección comparativa del 10 % se calculó sobre todo el período, no por día.
-- Se requiere una evaluación en un período nuevo.
-- Las probabilidades requieren revisar su calibración.
-- No se incorporaron variables meteorológicas.
-- No se validó la transferencia a vuelos de Colombia.
-- La carga a AWS no forma parte del flujo automático actual.
-
-## 11. Soportes de entrega
-
-El repositorio debe acompañarse del EDA del grupo, el documento
-colaborativo con las fases CRISP-DM y las evidencias de ejecución.
-
-La presentación ejecutiva resume el proyecto y sus resultados.
-## 12. Documentos, notebooks y versiones de referencia
-
-- `Procesos_revisado.docx` contiene el informe actualizado; es la versión que debe usarse para revisión.
-- `Procesos .docx`, `Plan de trabajo.docx`, `readme.docx` e `Instrucciones.docx` se conservan como documentos recibidos o versiones previas. Para el plan vigente, usar `PLAN_DE_TRABAJO.md`.
-- `Preparacion_modelo_vuelos.ipynb` es el notebook principal actualizado. `0. Proyecto_vuelos_integrado.ipynb` y los notebooks cuyo nombre comienza por `EDA` se conservan como evidencias y avances recibidos.
-- `Insumos/` conserva versiones anteriores, modelos y resultados de referencia. No asumir que sus métricas o periodos son los vigentes; contrastarlos con este README y `Procesos_revisado.docx`.
-- Se incluyen los modelos serializados necesarios para el flujo Prefect. Los datos grandes originales se descargan desde Kaggle y no se almacenan en este repositorio.
+Consulte `INSTRUCCIONES.md` y `PLAN_DE_TRABAJO_FINAL.md`. Para identificar documentos históricos, consulte `versiones_anteriores/LEEME_VERSIONES_ANTERIORES.md`.

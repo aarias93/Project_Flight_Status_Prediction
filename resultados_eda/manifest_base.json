@@ -1,0 +1,37 @@
+{
+  "source": "Combined_Flights_2018-2022.csv",
+  "source_bytes": 10214365394,
+  "source_gb_decimal": 10.214,
+  "source_rows": 29193782,
+  "excluded_year": 2020,
+  "retained_year_rows": {
+    "2018": 5689512,
+    "2019": 8091684,
+    "2021": 6311871,
+    "2022": 4078318
+  },
+  "filtered_all_columns_rows": 24171385,
+  "filtered_all_columns_bytes": 678550973,
+  "filtered_all_columns_gb_decimal": 0.679,
+  "original_columns": 61,
+  "model_rows_with_valid_target": 23634669,
+  "model_delayed_rows": 4537818,
+  "model_valid_rows_by_year": {
+    "2018": 5586619,
+    "2019": 7917264,
+    "2021": 6185870,
+    "2022": 3944916
+  },
+  "monthly_model_files": 43,
+  "model_data_bytes": 89234974,
+  "model_data_gb_decimal": 0.089,
+  "source_modified": false,
+  "method": "PyArrow streaming; Year == 2020 removed before analytical Parquet write; valid label only in model files",
+  "model_delay_rate": 0.19199837323721353,
+  "parquet_reduction_percent": 93.36,
+  "source_to_parquet_size_ratio": 15.05,
+  "eda_variables_rows": 61,
+  "pearson_spearman_sample_rows": 100000,
+  "correlation_method": "Same 100,000 complete observations; Pearson uses original numeric values; Spearman uses within-column average ranks of those observations.",
+  "eda_elapsed_minutes": 0.1
+}

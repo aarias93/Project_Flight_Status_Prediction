@@ -14,7 +14,8 @@ from threadpoolctl import threadpool_limits
 
 BASE = Path(__file__).resolve().parent
 MODELO = BASE / "modelos_v2" / "boosting_v2_1m.joblib"
-CLAVES = ["FlightDate", "Operating_Airline", "Origin"]
+CLAVES = ["FlightDate", "Operating_Airline", "Origin", "hora_salida"]
+CLAVES_REQUERIDAS = ["FlightDate", "Operating_Airline", "Origin"]
 
 
 @task(name="Validar entrada", cache_policy=NO_CACHE)
@@ -78,7 +79,7 @@ def analizar_entrada(ruta: str, variables: list):
                 datos["FlightDate"], errors="raise"
             ).dt.normalize()
 
-            if datos[CLAVES].isna().any().any():
+            if datos[CLAVES_REQUERIDAS].isna().any().any():
                 raise ValueError("Hay fechas, aerolíneas u orígenes nulos.")
 
             p = modelo.predict_proba(datos[variables])[:, 1]

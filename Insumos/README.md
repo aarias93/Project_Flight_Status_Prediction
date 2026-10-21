@@ -1,9 +1,5 @@
-# Nota sobre resultados históricos
+# Insumos históricos
 
-Los archivos de esta carpeta son insumos o referencias históricas. Cualquier salida anterior que incluya vuelos de 2020 queda obsoleta y no debe citarse. La exclusión de 2020 aplica a todo el análisis. Consulte [NOTA_EXCLUSION_2020.md](NOTA_EXCLUSION_2020.md).
+Esta carpeta conserva notebooks, modelos y salidas recibidos durante el desarrollo. No es la versión canónica y puede contener resultados anteriores. Las métricas antiguas no deben citarse.
 
-# Material de referencia anterior
-
-Esta carpeta conserva notebooks, modelos y resultados recibidos durante el desarrollo. Son copias de referencia, no la versión canónica del proyecto. Para las decisiones metodológicas vigentes, el alcance revisado y las instrucciones de ejecución, consulta el [README principal](../README.md), el [plan actualizado](../PLAN_DE_TRABAJO.md) y el [informe revisado](../Procesos_revisado.docx).
-
-Las rutas de otro equipo y el endpoint de AWS fueron redactados. Antes de ejecutar un notebook de esta carpeta, revisa las celdas porque puede contener experimentos y resultados anteriores a las observaciones del profesor.
+La versión vigente del análisis excluye 2020 y se describe en el [README principal](../README.md), el [plan actualizado](../PLAN_DE_TRABAJO_FINAL.md) y el [informe revisado](../INFORME_FINAL_Procesos_CRISP_DM.docx). La carga AWS y la conexión Grafana no están verificadas en el corte actual. No ejecutes notebooks antiguos de esta carpeta como evidencia final.

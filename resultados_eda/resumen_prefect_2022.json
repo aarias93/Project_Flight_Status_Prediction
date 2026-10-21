@@ -1,0 +1,22 @@
+{
+  "periodo": "2022-01-01 a 2022-07-31",
+  "excluded_year_2020": true,
+  "aggregation_keys": [
+    "fecha",
+    "aerolinea",
+    "aeropuerto_origen",
+    "hora_salida"
+  ],
+  "rows_aggregated": 1726512,
+  "flights_represented": 3944916,
+  "observed_delays": 853962,
+  "rows_with_outcome": 3944916,
+  "mean_model_probability": 0.16788181971457145,
+  "observed_delay_rate": 0.2164715294318054,
+  "csv_bytes": 147728816,
+  "parquet_bytes": 25158910,
+  "csv_path": "entrega_aws/RESUMEN_ANALITICO_AWS_FINAL_2022_01-07.csv",
+  "contains_original_flight_records": false,
+  "model_version": "boosting_v2_1m",
+  "status": "ready_for_database_load; no AWS credentials available in this execution"
+}

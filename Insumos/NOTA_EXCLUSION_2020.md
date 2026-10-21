@@ -1,5 +1,5 @@
 # Exclusión de 2020
 
-La fuente original contiene vuelos de 2020. Por la alteración excepcional de las operaciones durante la pandemia de COVID-19 y la falta de comparabilidad con años regulares, excluimos 2020 de todos los análisis descriptivos comparativos, indicadores de Dask, preparación de datos, modelos, evaluaciones y visualizaciones. No presentamos resultados ni conclusiones sobre ese año. Conservamos intacto el CSV original y aplicamos el filtro `Year <> 2020` antes de generar cualquier salida. El periodo analítico comprende 2018, 2019, 2021 y enero–julio de 2022.
+Excluimos 2020 de todos los análisis, transformaciones analíticas, modelos, evaluaciones y visualizaciones por la alteración excepcional de las operaciones durante la pandemia y la falta de comparabilidad. No presentamos métricas de 2020. Conservamos intacto el CSV original.
 
-Las salidas calculadas antes del filtro —incluidos conteos, gráficos, tamaños de bases preparadas y tiempos de Dask— quedan obsoletas y no deben citarse como resultados. Se deben regenerar después de filtrar 2020.
+El periodo analítico es 2018, 2019, 2021 y enero–julio de 2022. Los artefactos antiguos de esta carpeta que se calcularon antes de aplicar la exclusión son referencias obsoletas; no deben citarse. Los resultados vigentes se encuentran en la raíz del proyecto, documentados en README.md y INFORME_FINAL_Procesos_CRISP_DM.docx.

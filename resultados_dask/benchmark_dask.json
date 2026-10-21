@@ -1,0 +1,36 @@
+{
+  "dask_version": "2026.8.0",
+  "periodo": "2018, 2019, 2021 y enero-julio de 2022",
+  "year_2020_excluded": true,
+  "rows": 23634669,
+  "delays": 4537818,
+  "delay_rate": 0.19199837323721353,
+  "groups": 81136,
+  "configurations": [
+    {
+      "configuracion": "A",
+      "workers": 1,
+      "memoria_por_worker": "1GiB",
+      "mediana_segundos": 21.656147100031376,
+      "minimo_segundos": 21.62195729999803,
+      "maximo_segundos": 22.57695810002042,
+      "filas": 23634669,
+      "grupos": 81136,
+      "retrasos": 4537818
+    },
+    {
+      "configuracion": "B",
+      "workers": 2,
+      "memoria_por_worker": "512MiB",
+      "mediana_segundos": 10.567556699970737,
+      "minimo_segundos": 8.226841999974567,
+      "maximo_segundos": 11.118430899980012,
+      "filas": 23634669,
+      "grupos": 81136,
+      "retrasos": 4537818
+    }
+  ],
+  "repetitions_per_configuration": 3,
+  "same_output_all_runs": true,
+  "scope": "Read prepared monthly Parquet files, aggregate delay counts by year, month, airline, and origin."
+}

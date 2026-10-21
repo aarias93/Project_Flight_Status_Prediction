@@ -54,3 +54,25 @@ __pycache__/
 !/resultados_modelo_v2/*.csv
 !/resultados_modelo_v2/*.json
 !/resultados_dask/puntualidad_mensual_aerolinea_origen.parquet
+
+# Resultados pequeños recalculados para revisión en GitHub
+!/resultados_eda/*.csv
+!/resultados_eda/*.json
+# Entorno y temporales locales de recálculo/render
+.recalc_packages/
+.pip_tmp/
+.dask_tmp/
+.duckdb_tmp/
+_render_*/
+presentation_updated.pptx
+presentation_final_candidate.pptx
+
+# Pipelines serializados usados por los scripts vigentes (archivos pequeños)
+!/modelos_v2/
+!/modelos_v2/*.joblib
+!/Insumos/modelos_v2/*.joblib
+
+# Resultados históricos conservados solo como copia local de referencia
+/Insumos/resultados_dask/
+/Insumos/resultados_modelo/
+/Insumos/resultados_modelo_v2/
