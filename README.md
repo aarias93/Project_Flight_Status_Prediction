@@ -48,10 +48,12 @@ Usa `INFORME_FINAL_Procesos_CRISP_DM.docx` y `PRESENTACION_FINAL_Priorizacion_Ri
 
 El CSV fuente, los Parquet grandes y los temporales quedan fuera de GitHub. Los pipelines pequeños requeridos por el flujo sí están incluidos; los archivos de datos se generan o descargan localmente.
 
-## AWS y Grafana
-El resultado agregado identificado para AWS es `entrega_aws/RESUMEN_ANALITICO_AWS_FINAL_2022_01-07.csv` (y su copia Parquet); estos archivos de datos están excluidos de GitHub. El esquema y cargador finales están en `aws/`. No se cargó a Amazon RDS ni se verificó la conexión en esta ejecución. El tablero final para importar está en `grafana/DASHBOARD_GRAFANA_FINAL_RIESGO_VUELOS.json`; no se verificó ni publicó en una instancia Grafana. La publicación en ambos servicios queda pendiente de acceso y evidencia de despliegue.
+## Integración de resultados y visualización
+La salida analítica agregada para el periodo enero–julio de 2022 está en `entrega_aws/RESUMEN_ANALITICO_AWS_FINAL_2022_01-07.csv` y en su copia Parquet. El esquema de `aws/AWS_TABLA_ANALITICA_FINAL.sql` organiza las métricas en la tabla `analitica.resumen_vuelos`. El cargador de `aws/AWS_CARGA_RESUMEN_FINAL.py` valida el esquema, utiliza conexión PostgreSQL con TLS y carga únicamente los agregados. La definición de `grafana/DASHBOARD_GRAFANA_FINAL_RIESGO_VUELOS.json` consulta esa tabla para presentar métricas y desgloses por periodo, aerolínea, aeropuerto y hora.
+
+Para reproducir la integración, configure la conexión y el certificado TLS en el entorno local, ejecute el cargador con el archivo agregado, y en Grafana configure la fuente PostgreSQL e importe la definición del tablero. La base analítica excluye los registros originales de vuelos.
 
 ## Ejecución
-Consulte Requirements.txt, abra esta carpeta en VS Code y use rutas relativas. Para los resultados recalculados, ejecute recalcular_base_sin_2020.py, recalcular_resultados_eda.py, ejecutar_benchmark_dask.py, evaluar_modelos_v2.py y consolidar_resultados_prefect.py en ese orden, con el CSV original y modelos requeridos. Para el flujo, revise configuración en flujo_vuelos.py. No ejecute cargas AWS sin configurar credenciales fuera del repositorio y verificar que se suban únicamente agregados.
+Consulte Requirements.txt, abra esta carpeta en VS Code y use rutas relativas. Para los resultados recalculados, ejecute recalcular_base_sin_2020.py, recalcular_resultados_eda.py, ejecutar_benchmark_dask.py, evaluar_modelos_v2.py y consolidar_resultados_prefect.py en ese orden, con el CSV original y modelos requeridos. Para el flujo, revise configuración en flujo_vuelos.py. Configure `AWS_DATABASE_URL` y el certificado TLS fuera del repositorio; cargue solo el resumen agregado.
 
 Consulte `INSTRUCCIONES.md` y `PLAN_DE_TRABAJO_FINAL.md`. Para identificar documentos históricos, consulte `versiones_anteriores/LEEME_VERSIONES_ANTERIORES.md`.
