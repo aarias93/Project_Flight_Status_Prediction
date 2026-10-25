@@ -8,7 +8,7 @@ import re
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 DASK_SCRATCH = ROOT / ".dask_tmp"
 DASK_SCRATCH.mkdir(exist_ok=True)
 os.environ["DASK_TEMPORARY_DIRECTORY"] = str(DASK_SCRATCH)

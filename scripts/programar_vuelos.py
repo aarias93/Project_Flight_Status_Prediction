@@ -9,7 +9,7 @@ os.environ["PREFECT_API_URL"] = "http://127.0.0.1:4200/api"
 from prefect import flow
 from flujo_vuelos import flujo_vuelos, MODELO
 
-BASE = Path(__file__).resolve().parent
+BASE = Path(__file__).resolve().parents[1]
 ENTRADAS = BASE / "entradas_prefect"
 CONTROL = BASE / "control_prefect.json"
 
@@ -36,7 +36,7 @@ def revisar_entradas():
     # Reprocesar también si cambia el modelo o el código analítico.
     version = (
         huella(MODELO)
-        + huella(BASE / "flujo_vuelos.py")
+        + huella(BASE / "scripts" / "flujo_vuelos.py")
     )
 
     procesados = 0

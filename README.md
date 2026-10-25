@@ -23,21 +23,25 @@ La base Parquet analítica, con las 61 columnas y sin 2020, contiene 24.171.385 
 
 ## Versiones de documentos
 
-Usa `INFORME_FINAL_Procesos_CRISP_DM.docx` y `PRESENTACION_FINAL_Priorizacion_Riesgo_Vuelos.pptx` para la entrega y exposición. `PLAN_DE_TRABAJO_FINAL.md` y `README.md` son las guías vigentes. Las versiones anteriores se conservan identificadas en `versiones_anteriores/`; no uses sus cifras para la entrega final.
+Los tres entregables vigentes están agrupados en `ENTREGA_FINAL/`: informe, presentación y notebook de preparación del modelo. `README.md`, `INSTRUCCIONES.md` y `PLAN_DE_TRABAJO_FINAL.md` orientan la navegación y el trabajo. Las versiones anteriores se conservan identificadas en `versiones_anteriores/`.
 
 ## Archivos principales
 | Archivo o carpeta | Uso |
 | --- | --- |
-| INFORME_FINAL_Procesos_CRISP_DM.docx | Informe de procesos y resultados recalculados |
-| PRESENTACION_FINAL_Priorizacion_Riesgo_Vuelos.pptx | Diapositivas finales para la exposición |
-| PLAN_DE_TRABAJO_FINAL.md | Estado y tareas pendientes |
+| ENTREGA_FINAL/Informe final.docx | Informe final del proyecto |
+| ENTREGA_FINAL/Presentación final.pptx | Diapositivas finales para la exposición |
+| ENTREGA_FINAL/Preparacion modelo vuelos.ipynb | Notebook final de preparación del modelo |
+| notebooks/ | Notebooks de exploración y desarrollo |
+| scripts/ | Scripts de procesamiento, evaluación y Prefect |
+| referencias/ | Instrucciones originales y enlace a los datos |
+| PLAN_DE_TRABAJO_FINAL.md | Estado y tareas siguientes |
 | DECISION_EXCLUSION_2020.md | Decisión metodológica sobre 2020 |
-| recalcular_base_sin_2020.py | Produce Parquet analítico y particiones de modelado |
-| recalcular_resultados_eda.py | Recalcula EDA descriptivo y tablas |
-| ejecutar_benchmark_dask.py | Compara configuraciones Dask |
-| evaluar_modelos_v2.py | Reevalúa modelos sin 2020 |
-| flujo_vuelos.py | Predicción y agregación con Prefect |
-| consolidar_resultados_prefect.py | Consolida las salidas mensuales |
+| scripts/recalcular_base_sin_2020.py | Produce Parquet analítico y particiones de modelado |
+| scripts/recalcular_resultados_eda.py | Recalcula EDA descriptivo y tablas |
+| scripts/ejecutar_benchmark_dask.py | Compara configuraciones Dask |
+| scripts/evaluar_modelos_v2.py | Reevalúa modelos sin 2020 |
+| scripts/flujo_vuelos.py | Predicción y agregación con Prefect |
+| scripts/consolidar_resultados_prefect.py | Consolida las salidas mensuales |
 | resultados_eda/ | Estadísticos y resúmenes; los archivos grandes quedan locales |
 | resultados_dask/ | Tiempos y resultados de Dask |
 | resultados_modelo_v2/ | Métricas recalculadas por periodo y modelo |
@@ -54,6 +58,6 @@ La salida analítica agregada para el periodo enero–julio de 2022 está en `en
 Para reproducir la integración, configure la conexión y el certificado TLS en el entorno local, ejecute el cargador con el archivo agregado, y en Grafana configure la fuente PostgreSQL e importe la definición del tablero. La base analítica excluye los registros originales de vuelos.
 
 ## Ejecución
-Consulte Requirements.txt, abra esta carpeta en VS Code y use rutas relativas. Para los resultados recalculados, ejecute recalcular_base_sin_2020.py, recalcular_resultados_eda.py, ejecutar_benchmark_dask.py, evaluar_modelos_v2.py y consolidar_resultados_prefect.py en ese orden, con el CSV original y modelos requeridos. Para el flujo, revise configuración en flujo_vuelos.py. Configure `AWS_DATABASE_URL` y el certificado TLS fuera del repositorio; cargue solo el resumen agregado.
+Consulte `Requirements.txt` y abra la raíz del repositorio en VS Code. Ejecute los notebooks manteniendo esa raíz como carpeta de trabajo para resolver las rutas de datos. Para recalcular los resultados, ejecute `python scripts/recalcular_base_sin_2020.py`, `python scripts/recalcular_resultados_eda.py`, `python scripts/ejecutar_benchmark_dask.py`, `python scripts/evaluar_modelos_v2.py` y `python scripts/consolidar_resultados_prefect.py`, en ese orden, con el CSV original y los modelos requeridos. Para el flujo de Prefect, use `python scripts/flujo_vuelos.py`. Configure `AWS_DATABASE_URL` y el certificado TLS fuera del repositorio; cargue solo el resumen agregado.
 
 Consulte `INSTRUCCIONES.md` y `PLAN_DE_TRABAJO_FINAL.md`. Para identificar documentos históricos, consulte `versiones_anteriores/LEEME_VERSIONES_ANTERIORES.md`.

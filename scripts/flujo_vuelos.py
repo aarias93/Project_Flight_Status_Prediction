@@ -12,7 +12,7 @@ from prefect import flow, task
 from prefect.cache_policies import NO_CACHE
 from threadpoolctl import threadpool_limits
 
-BASE = Path(__file__).resolve().parent
+BASE = Path(__file__).resolve().parents[1]
 MODELO = BASE / "modelos_v2" / "boosting_v2_1m.joblib"
 CLAVES = ["FlightDate", "Operating_Airline", "Origin", "hora_salida"]
 CLAVES_REQUERIDAS = ["FlightDate", "Operating_Airline", "Origin"]

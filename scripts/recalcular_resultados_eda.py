@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 FULL = ROOT / "datos_preparados" / "base_sin_2020.parquet"
 MODEL_GLOB = ROOT / "datos_modelo" / "vuelos_*.parquet"
 RESULTS = ROOT / "resultados_eda"
@@ -20,7 +20,7 @@ SOURCE = ROOT / "Combined_Flights_2018-2022.csv"
 
 def main() -> None:
     if not FULL.is_file() or not MODEL_GLOB.parent.is_dir():
-        raise FileNotFoundError("Ejecuta primero recalcular_base_sin_2020.py.")
+        raise FileNotFoundError("Ejecuta primero scripts/recalcular_base_sin_2020.py.")
     RESULTS.mkdir(exist_ok=True)
     temp = ROOT / ".duckdb_tmp"
     temp.mkdir(exist_ok=True)

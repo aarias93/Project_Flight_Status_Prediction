@@ -18,7 +18,7 @@ from sklearn.metrics import (
 from threadpoolctl import threadpool_limits
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "datos_modelo"
 OUT = ROOT / "resultados_modelo_v2"
 MODELS = {

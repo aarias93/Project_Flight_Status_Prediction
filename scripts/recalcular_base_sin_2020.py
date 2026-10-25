@@ -20,7 +20,7 @@ import pyarrow.csv as pacsv
 import pyarrow.parquet as pq
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "Combined_Flights_2018-2022.csv"
 FULL_DIR = ROOT / "datos_preparados"
 FULL_FINAL = FULL_DIR / "base_sin_2020.parquet"
